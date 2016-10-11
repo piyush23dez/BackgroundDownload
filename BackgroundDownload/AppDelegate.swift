@@ -8,11 +8,20 @@
 
 import UIKit
 
+extension Notification.Name {
+    
+    static let gotProgress = Notification.Name("gotprogress")
+    static let gotData = Notification.Name("gotdata")
+}
+
+
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var completionHandlers = [String : () -> Void]()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -40,7 +49,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    //let the app know when all the tasks of the session have completed, and handle the new content. so subscribe to the below method
+    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+        /* When the application enters the background and a transfer session is running,
+           this method is called and the system passes us a completion handler */
+           
+        //our app will use this completion handler to let iOS know when our application is done processing
+        completionHandlers[identifier] = completionHandler
+    }
 }
 
