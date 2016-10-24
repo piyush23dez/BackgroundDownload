@@ -1,5 +1,5 @@
 /*
- we use the Background Transfer Service and URLSession API to start downloading a large files that continues to download
+ we use the Background Transfer Service and URLSession API to start downloading large files that continues to download
  when the app is in the background.
  
  
